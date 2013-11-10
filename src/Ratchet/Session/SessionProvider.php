@@ -97,6 +97,13 @@ class SessionProvider implements MessageComponentInterface, WsServerInterface {
     /**
      * {@inheritdoc}
      */
+    function onBinaryMessage(ConnectionInterface $from, $msg) {
+        return $this->_app->onBinaryMessage($from, $msg);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     function onClose(ConnectionInterface $conn) {
         // "close" session for Connection
 
