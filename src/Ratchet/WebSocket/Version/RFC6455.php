@@ -195,15 +195,29 @@ class RFC6455 implements VersionInterface {
             $parsed = $from->WebSocket->message->getPayload();
             unset($from->WebSocket->message);
 
-            if (!$this->validator->checkEncoding($parsed, 'UTF-8')) {
-                return $from->close(Frame::CLOSE_BAD_PAYLOAD);
+            if ($opcode == Frame::OP_BINARY) {
+                this.onBinaryMessage($from, $data);
+            } else {
+                if (!$this->validator->checkEncoding($parsed, 'UTF-8')) {
+                    return $from->close(Frame::CLOSE_BAD_PAYLOAD);
+                }
+                $from->WebSocket->coalescedCallback->onMessage($from, $parsed);
             }
-
-            $from->WebSocket->coalescedCallback->onMessage($from, $parsed);
+            
         }
 
         if (strlen($overflow) > 0) {
             $this->onMessage($from, $overflow);
+        }
+    }
+
+    /**
+     * @param \Ratchet\WebSocket\Version\RFC6455\Connection $from
+     * @param string                                        $data
+     */
+    public function onBinaryMessage(ConnectionInterface $from, $data) {
+        if ($from->WebSocket->message->isCoalesced()) {
+            $from->WebSocket->coalescedCallback->onBinaryMessage($from, $parsed);
         }
     }
 

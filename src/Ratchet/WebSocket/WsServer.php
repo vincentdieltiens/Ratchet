@@ -94,6 +94,17 @@ class WsServer implements HttpServerInterface {
         $this->attemptUpgrade($from, $msg);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function onBinaryMessage(ConnectionInterface $from, $msg) {
+        if (true === $from->WebSocket->established) {
+            return $from->WebSocket->version->onBinaryMessage($this->connections[$from], $msg);
+        }
+
+        throw new \UnexpectedValueException('Can not receive binary message if connection is not establied');
+    }
+
     protected function attemptUpgrade(ConnectionInterface $conn, $data = '') {
         if ('' !== $data) {
             $conn->WebSocket->request->getBody()->write($data);
