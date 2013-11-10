@@ -71,7 +71,7 @@ class Router implements HttpServerInterface {
     /**
      * {@inheritdoc}
      */
-    function onBinaryMessage(ConnectionInterface $from, $msg);
+    function onBinaryMessage(ConnectionInterface $from, $msg) {
         $from->controller->onBinaryMessage($from, $msg);
     }
 

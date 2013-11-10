@@ -98,6 +98,10 @@ class Hixie76 implements VersionInterface {
         }
     }
 
+    public function onBinaryMessage(ConnectionInterface $from, $data) {
+        // TODO
+    }
+
     public function newFrame() {
         return new Frame;
     }
