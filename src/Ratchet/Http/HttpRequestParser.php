@@ -46,6 +46,16 @@ class HttpRequestParser implements MessageInterface {
     }
 
     /**
+     * @param \Ratchet\ConnectionInterface $context
+     * @param string                       $data Data stream to buffer
+     * @return \Guzzle\Http\Message\RequestInterface|null
+     * @throws \OverflowException If the message buffer has become too large
+     */
+    public function onBinaryMessage(ConnectionInterface $context, $data) {
+        throw new \LogicException('HttpRequestParser should not parse binary data');
+    }
+
+    /**
      * Determine if the message has been buffered as per the HTTP specification
      * @param  string  $message
      * @return boolean

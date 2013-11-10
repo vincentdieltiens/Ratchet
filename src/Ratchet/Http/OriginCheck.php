@@ -51,6 +51,14 @@ class OriginCheck implements HttpServerInterface {
     /**
      * {@inheritdoc}
      */
+    function onBinaryMessage(ConnectionInterface $from, $msg) {
+        return $this->_component->onBinaryMessage($from, $msg);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
     function onClose(ConnectionInterface $conn) {
         return $this->_component->onClose($conn);
     }

@@ -53,6 +53,10 @@ class HttpServer implements MessageComponentInterface {
         $this->_httpServer->onMessage($from, $msg);
     }
 
+    public function onBinaryMessage(ConnectionInterface $from, $msg) {
+        $this->_httpServer->onBinaryMessage($from, $msg);
+    }
+
     /**
      * {@inheritdoc}
      */

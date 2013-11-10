@@ -46,7 +46,8 @@ class Router implements HttpServerInterface {
         if (!($route['_controller'] instanceof HttpServerInterface)) {
             throw new \UnexpectedValueException('All routes must implement Ratchet\Http\HttpServerInterface');
         }
-        
+
+        $conn->controller = $route['_controller'];
         $parameters = array();
         foreach($route as $key => $value) {
             if (!in_array($key, array('_controller', '_route'))) {
@@ -57,7 +58,6 @@ class Router implements HttpServerInterface {
         $url->setQuery($parameters);
         $request->setUrl($url);
 
-        $conn->controller = $route['_controller'];
         $conn->controller->onOpen($conn, $request);
     }
 
@@ -66,6 +66,13 @@ class Router implements HttpServerInterface {
      */
     function onMessage(ConnectionInterface $from, $msg) {
         $from->controller->onMessage($from, $msg);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    function onBinaryMessage(ConnectionInterface $from, $msg);
+        $from->controller->onBinaryMessage($from, $msg);
     }
 
     /**
