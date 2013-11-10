@@ -94,6 +94,14 @@ class IpBlackList implements MessageComponentInterface {
     /**
      * {@inheritdoc}
      */
+    function onBinaryMessage(ConnectionInterface $from, $msg) {
+        return $this->_decorating->onBinaryMessage($from, $msg);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
     function onClose(ConnectionInterface $conn) {
         if (!$this->isBlocked($conn->remoteAddress)) {
             $this->_decorating->onClose($conn);

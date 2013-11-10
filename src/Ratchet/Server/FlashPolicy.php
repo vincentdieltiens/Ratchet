@@ -114,6 +114,14 @@ class FlashPolicy implements MessageComponentInterface {
     /**
      * {@inheritdoc}
      */
+    public function onBinaryMessage(ConnectionInterface $from, $msg) {
+        $from->close();
+        throw new \LogicException("Flash Policy does not handle binary message");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function onClose(ConnectionInterface $conn) {
     }
 

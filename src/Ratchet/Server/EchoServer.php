@@ -14,6 +14,10 @@ class EchoServer implements MessageComponentInterface {
         $from->send($msg);
     }
 
+    public function onBinaryMessage(ConnectionInterface $from, $msg) {
+        $from->send($msg);
+    }
+
     public function onClose(ConnectionInterface $conn) {
     }
 
