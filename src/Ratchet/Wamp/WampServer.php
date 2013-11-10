@@ -49,6 +49,13 @@ class WampServer implements MessageComponentInterface, WsServerInterface {
     /**
      * {@inheritdoc}
      */
+    public function onBinaryMessage(ConnectionInterface $conn, $msg) {
+        $conn->close(1007);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function onClose(ConnectionInterface $conn) {
         $this->wampProtocol->onClose($conn);
     }

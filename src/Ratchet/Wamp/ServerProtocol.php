@@ -140,6 +140,15 @@ class ServerProtocol implements MessageComponentInterface, WsServerInterface {
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
+     * @throws JsonException
+     */
+    public function onBinaryMessage(ConnectionInterface $from, $msg) {
+        throw new \UnexpectedValueException("Invalid WAMP message format");
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function onClose(ConnectionInterface $conn) {
         $decor = $this->connections[$conn];
